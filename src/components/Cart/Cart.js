@@ -1,9 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Cart = (props) => {
     const cart = props.cart;
-    let totalPrice = cart.reduce((total , products) => total + products.price , 0);
-    totalPrice = Number(totalPrice.toFixed(2))
+    // console.log(cart);
+    let totalPrice = cart.reduce((total , products) => total + (products.price)*(products.quatity) , 0);
+    totalPrice = Number(totalPrice.toFixed(2));
+    
     let shippingCost = totalPrice;
     if(shippingCost > 35){
         shippingCost = 10;
@@ -20,6 +23,12 @@ const Cart = (props) => {
             <p> Shipping Cost : {shippingCost}</p>
             <p>Tax : {tax}</p>
             <p>Total Price : {grandTotal} </p>
+            
+            { props.isPlacingOrder
+                ? <Link to ='/review'>  <button className="main-btn" onClick={() => props.handleOrder()}>Place Order</button> </Link>
+                : <Link to ='/review'>  <button className="main-btn">Review Order</button> </Link>
+            }
+                
         </div>
     );
 };
